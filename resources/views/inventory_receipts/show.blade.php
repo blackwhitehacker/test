@@ -6,7 +6,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </a>
                 <h2 class="font-bold text-xl text-gray-900 tracking-tight uppercase">
-                    {{ __('Xử lý phiếu') }} <span class="text-[#E11D48]">{{ $receipt->type == 'inbound' ? __('nhập kho') : __('xuất kho') }}</span>: {{ $receipt->code }}
+                    {{ __('Xử lý phiếu') }} <span class="text-gray-900">{{ $receipt->type == 'inbound' ? __('nhập kho') : __('xuất kho') }}</span>: {{ $receipt->code }}
                 </h2>
             </div>
 
@@ -20,7 +20,7 @@
                             ? 'Xác nhận nhập kho chính thức?'
                             : 'Xác nhận xuất kho chính thức?';
                     @endphp
-                    <button form="receipt-form" formaction="{{ route('inventory_receipts.confirm', $receipt) }}" type="submit" onclick="return confirm('{{ $confirmMsg }}')" class="btn-enterprise">
+                    <button form="receipt-form" formaction="{{ route('inventory_receipts.confirm', $receipt) }}" type="submit" onclick="return confirm('{{ $confirmMsg }}')" class="btn-enterprise-danger px-6">
                         {{ __('Hoàn thành') }}
                     </button>
                 @else
@@ -48,7 +48,7 @@
                             <div class="p-2 bg-gray-900 rounded-lg">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             </div>
-                            <h3 class="font-bold text-[10px] uppercase tracking-widest text-[#E11D48]">
+                            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500">
                                 {{ $receipt->type == 'inbound' ? 'Ghi chú nhập kho' : 'Ghi chú xuất kho' }}
                             </h3>
                         </div>
@@ -61,7 +61,7 @@
                     @foreach($receipt->items as $itemIndex => $item)
                         <div class="card-enterprise overflow-hidden">
                             <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
-                                <h3 class="text-[10px] font-bold text-gray-900 tracking-widest uppercase"><span class="text-[#E11D48] mr-1">#{{ $itemIndex + 1 }}</span> {{ $item['name'] }}</h3>
+                                <h3 class="text-[10px] font-bold text-gray-900 tracking-widest uppercase"><span class="text-gray-900 mr-1">#{{ $itemIndex + 1 }}</span> {{ $item['name'] }}</h3>
                                 <span class="badge-enterprise bg-gray-900 text-white border-none py-1 px-3 text-[9px] font-bold">SL: {{ $item['quantity'] }}</span>
                             </div>
                             
@@ -86,7 +86,7 @@
                                                     <td class="py-4">
                                                         <input type="text" name="items[{{ $itemIndex }}][details][{{ $detailIndex }}][asset_code]" 
                                                             value="{{ $detail['asset_code'] }}" required
-                                                            class="enterprise-input font-bold tracking-tight text-xs {{ $receipt->status != 'draft' ? 'bg-gray-50 border-none' : '' }}"
+                                                            class="enterprise-input font-bold tracking-tighter text-xs {{ $receipt->status != 'draft' ? 'bg-gray-50 border-none' : '' }}"
                                                             {{ $receipt->status != 'draft' ? 'disabled' : '' }}>
                                                     </td>
                                                     <td class="py-4">
@@ -186,7 +186,7 @@
                         </div>
                     @else
                         <div class="py-6 text-center italic border-2 border-dashed border-gray-100 rounded-2xl">
-                            <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Chưa có bản ghi</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Chưa có bản ghi</p>
                         </div>
                     @endif
                 </div>

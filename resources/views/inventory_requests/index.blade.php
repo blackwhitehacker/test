@@ -1,120 +1,147 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-2 gap-6">
             <div>
-                <h2 class="font-bold text-xl text-gray-900 tracking-tight uppercase">
-                    Quản lý yêu cầu <span class="text-[#E11D48]">{{ $type == 'inbound' ? 'nhập kho' : 'xuất kho' }}</span>
+                <h2 class="font-bold text-3xl text-gray-900 tracking-tight uppercase leading-none mb-3">
+                    Quản lý yêu cầu 
+                    @if($type == 'all')
+                        <span class="text-gray-400">TẤT CẢ</span>
+                    @else
+                        <span class="text-[#E11D48]">{{ $type == 'inbound' ? 'nhập kho' : 'xuất kho' }}</span>
+                    @endif
                 </h2>
-                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Hệ thống phê duyệt & Điều phối vật tư tập trung</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#E11D48]"></div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 italic">Hệ thống phê duyệt & Điều phối vật tư tập trung</span>
+                </div>
             </div>
-            <a href="{{ route('inventory_requests.create', ['type' => $type]) }}" class="btn-enterprise">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                Tạo phiếu {{ $type == 'inbound' ? 'nhập' : 'xuất' }} mới
-            </a>
+            @if($type != 'all')
+                <a href="{{ route('inventory_requests.create', ['type' => $type]) }}" 
+                   class="bg-[#E11D48] text-white px-6 h-10 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all hover:bg-[#BE123C] shadow-lg shadow-red-900/10 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                    THÊM PHIẾU {{ $type == 'inbound' ? 'NHẬP' : 'XUẤT' }} MỚI
+                </a>
+            @endif
         </div>
     </x-slot>
 
-    <div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <!-- Status Tabs -->
-        <div class="flex gap-2 p-1 bg-gray-100 rounded-xl w-fit border border-gray-200">
-            @foreach(['all' => 'Tất cả', 'pending' => 'Chờ duyệt', 'approved' => 'Đã duyệt', 'rejected' => 'Từ chối', 'cancelled' => 'Đã hủy'] as $key => $label)
-                <a href="{{ route('inventory_requests.index', ['status' => $key, 'type' => $type]) }}" 
-                   class="px-4 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-wider transition-all duration-200
-                   {{ $status == $key ? 'bg-[#E11D48] text-white shadow-sm' : 'text-gray-500 hover:text-gray-900 hover:bg-white' }}">
-                    {{ $label }}
-                </a>
-            @endforeach
+    <div class="space-y-10 animate-in fade-in duration-700">
+        <!-- Search & Filter Area (Mirrored from Partners) -->
+        <div class="card-enterprise p-8 bg-white border-l-4 border-[#E11D48] shadow-sm italic">
+            <form action="{{ route('inventory_requests.index') }}" method="GET" class="flex flex-col md:flex-row gap-8">
+                <input type="hidden" name="type" value="{{ $type }}">
+                <input type="hidden" name="status" value="{{ $status }}">
+                
+                <div class="flex-1 relative group">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500 block mb-3">Tra cứu thông tin hồ sơ</label>
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ request('search') }}" 
+                               class="enterprise-input py-3 !pl-10 text-[13px] font-bold italic" 
+                               placeholder="Tìm mã số phiếu, nhân sự đề xuất, lô hàng liên kết...">
+                        <svg class="w-4 h-4 absolute left-3.5 top-3.5 text-gray-400 group-focus-within:text-[#E11D48] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+
+                <div class="flex items-end gap-3">
+                    <button type="submit" class="bg-gray-900 text-white px-10 h-11 rounded-xl text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black transition shadow-lg italic">
+                        TRUY XUẤT
+                    </button>
+                    @if(request('search'))
+                        <a href="{{ route('inventory_requests.index', ['type' => $type, 'status' => $status]) }}" class="px-6 h-11 text-[10px] font-bold text-gray-400 hover:text-gray-900 flex items-center shadow-sm border border-gray-100 rounded-xl bg-gray-50 transition-all uppercase tracking-widest italic">
+                            HỦY LỌC
+                        </a>
+                    @endif
+                </div>
+            </form>
+
+            <div class="flex flex-wrap gap-2 mt-8 pt-6 border-t border-gray-100">
+                @foreach(['all' => 'Tất cả', 'pending' => 'Chờ duyệt', 'approved' => 'Đã duyệt', 'rejected' => 'Từ chối', 'cancelled' => 'Đã hủy'] as $key => $label)
+                    <a href="{{ route('inventory_requests.index', ['status' => $key, 'type' => $type, 'search' => request('search')]) }}" 
+                       class="px-6 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all
+                       {{ $status == $key ? 'bg-gray-900 text-white shadow-md' : 'text-gray-400 hover:text-gray-900 hover:bg-gray-50 border border-gray-100' }}">
+                        {{ $label }}
+                    </a>
+                @endforeach
+            </div>
         </div>
 
-        <div class="card-enterprise overflow-hidden border-t-0 border-gray-100 shadow-xl">
-            <div class="px-6 py-4 bg-gray-900 flex justify-between items-center border-b border-white/5">
-                <div class="flex items-center gap-4">
-                    <div class="w-1.5 h-1.5 rounded-full bg-[#E11D48] shadow-[0_0_8px_rgba(225,29,72,0.8)]"></div>
-                    <h3 class="font-bold text-[9px] uppercase tracking-[0.2em] text-white/90 leading-none">Phân hệ điều phối & Quản lý yêu cầu</h3>
-                </div>
-                <div class="flex gap-1.5">
-                    <div class="w-1 h-1 rounded-full bg-white/20"></div>
-                    <div class="w-1 h-1 rounded-full bg-white/10"></div>
+        <!-- Table Card (Mirrored from Partners) -->
+        <div class="card-enterprise overflow-hidden border-l-4 border-[#E11D48] shadow-2xl">
+            <div class="px-8 py-6 bg-white flex justify-between items-center border-b border-gray-100">
+                <h3 class="font-bold text-[10px] uppercase tracking-[0.2em] text-gray-500 italic">Cơ sở dữ liệu điều phối yêu cầu & quản lý vật tư</h3>
+                <div class="flex space-x-1">
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#E11D48] animate-pulse"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-gray-200"></div>
                 </div>
             </div>
             <div class="overflow-x-auto">
                 <table class="table-premium">
                     <thead>
-                        <tr class="bg-gray-50/80 border-b border-gray-100">
-                            <th class="w-32 pl-6 py-3.5 text-left">Mã Số Phiếu</th>
-                            <th class="w-40 py-3.5 text-left">Phân Loại Nguồn</th>
-                            <th class="py-3.5 text-left">Nhân Sự Đề Xuất</th>
-                            <th class="w-48 py-3.5 text-left">Hợp Đồng/Lô Hàng</th>
-                            <th class="w-32 py-3.5 text-center">Trạng Thái</th>
-                            <th class="w-24 pr-6 py-3.5 text-right">Tác Vụ</th>
+                        <tr class="bg-gray-50/50 border-b border-gray-100 uppercase tracking-widest text-gray-400 text-[9px]">
+                            <th class="pl-8 !py-4 font-bold !text-left">Định Danh</th>
+                            <th class="py-4 font-bold !text-left">Nguồn Gốc</th>
+                            @if($type == 'all')
+                                <th class="py-4 font-bold !text-left">Phân Loại</th>
+                            @endif
+                            <th class="py-4 font-bold !text-left">Nhân Sự Đề Xuất</th>
+                            <th class="py-4 font-bold !text-left">Hợp Đồng / Lô Hàng</th>
+                            <th class="py-4 font-bold !text-center">Trạng Thái</th>
+                            <th class="pr-8 py-4 font-bold !text-right">Điều Phối</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 bg-white">
                         @forelse($requests as $req)
-                            <tr class="hover:bg-gray-50/50 transition-all duration-200 group">
-                                <td class="pl-6 py-5 align-middle">
-                                    <div class="flex flex-col">
-                                        <span class="text-[10px] font-bold text-[#E11D48] bg-red-50/50 px-2.5 py-1 rounded border border-red-100 shadow-sm w-fit">{{ $req->code }}</span>
-                                        <span class="text-[8px] text-gray-400 font-bold uppercase tracking-widest mt-1.5 ml-0.5">{{ $req->created_at->format('d/m/Y') }}</span>
+                            <tr class="hover:bg-gray-50/50 transition-all group">
+                                <td class="pl-8 py-6">
+                                    <span class="text-[10px] font-bold text-[#E11D48] uppercase bg-red-50 px-3 py-1 rounded shadow-sm">{{ $req->code }}</span>
+                                    <div class="text-[8px] text-gray-400 font-bold uppercase mt-1 italic tracking-tighter">{{ $req->created_at->format('d/m/Y') }}</div>
+                                </td>
+                                <td class="py-6">
+                                    <div class="text-[12px] font-bold text-gray-900 uppercase">
+                                        @if($req->source_type == 'purchase') MUA SẮM @elseif($req->source_type == 'transfer') ĐIỀU CHUYỂN @else NGHIỆP VỤ @endif
                                     </div>
                                 </td>
-                                <td class="py-5 align-middle">
-                                    <span class="text-[8px] font-bold uppercase tracking-widest px-2 py-1 bg-gray-100 text-gray-600 rounded border border-gray-200/50 shadow-sm">
-                                        @if($req->source_type == 'purchase') MUA SẮM @elseif($req->source_type == 'transfer') ĐIỀU CHUYỂN @else NGHIỆP VỤ @endif
-                                    </span>
-                                </td>
-                                <td class="py-5 align-middle">
-                                    <div class="flex items-center gap-2.5">
-                                        <div class="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shadow-md ring-2 ring-white transition-transform group-hover:scale-110">
+                                @if($type == 'all')
+                                    <td class="py-6">
+                                        <span class="text-[10px] font-bold {{ $req->type == 'inbound' ? 'text-blue-600' : 'text-amber-600' }} uppercase italic">
+                                            {{ $req->type == 'inbound' ? 'NHẬP KHO' : 'XUẤT KHO' }}
+                                        </span>
+                                    </td>
+                                @endif
+                                <td class="py-6">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-gray-900 flex items-center justify-center text-[10px] font-bold text-white shadow-sm">
                                             {{ strtoupper(substr($req->requester->name, 0, 1)) }}
                                         </div>
-                                        <span class="text-[10px] font-bold text-gray-700 uppercase tracking-tight">{{ $req->requester->name }}</span>
+                                        <span class="text-[11px] font-bold text-gray-500 uppercase">{{ $req->requester->name }}</span>
                                     </div>
                                 </td>
-                                <td class="py-5 align-middle">
+                                <td class="py-6">
                                     @if($req->shipment)
-                                        <div class="flex flex-col">
-                                            <span class="text-[10px] font-bold text-gray-900 font-mono tracking-tight">{{ $req->shipment->code }}</span>
-                                            <span class="text-[8px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">Lô hàng liên kết</span>
-                                        </div>
+                                        <div class="text-[11px] font-bold text-gray-900 uppercase">{{ $req->shipment->code }}</div>
+                                        <div class="text-[8px] text-gray-400 font-bold uppercase italic mt-0.5">Lô hàng liên kết</div>
                                     @else
-                                        <span class="text-[9px] font-bold text-gray-300 uppercase italic tracking-widest">N/A</span>
+                                        <span class="text-[10px] text-gray-300 italic">---</span>
                                     @endif
                                 </td>
-                                <td class="py-5 text-center align-middle">
-                                    @php
-                                        $stConf = [
-                                            'pending' => ['label' => 'CHỜ DUYỆT', 'class' => 'bg-amber-50 text-amber-700 border-amber-200'],
-                                            'approved' => ['label' => 'ĐÃ PHÊ DUYỆT', 'class' => 'bg-green-50 text-green-700 border-green-200'],
-                                            'rejected' => ['label' => 'TỪ CHỐI', 'class' => 'bg-red-50 text-red-700 border-red-200'],
-                                            'cancelled' => ['label' => 'ĐÃ HỦY', 'class' => 'bg-gray-100 text-gray-500 border-gray-200'],
-                                        ];
-                                        $st = $stConf[$req->status] ?? ['label' => strtoupper($req->status), 'class' => 'bg-gray-50 text-gray-700 border-gray-200'];
-                                    @endphp
-                                    <div class="flex justify-center">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider border {{ $st['class'] }}">
-                                            {{ $st['label'] }}
-                                        </span>
-                                    </div>
+                                <td class="py-6 !text-center">
+                                    <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border border-dashed
+                                        {{ $req->status == 'approved' ? 'bg-green-50 text-green-600 border-green-200' : ($req->status == 'pending' ? 'bg-amber-50 text-amber-500 border-amber-200' : 'bg-red-50 text-red-600 border-red-200') }}">
+                                        {{ $req->status == 'approved' ? 'ĐÃ DUYỆT' : ($req->status == 'pending' ? 'CHỜ DUYỆT' : 'TỪ CHỐI') }}
+                                    </span>
                                 </td>
-                                <td class="pr-6 py-5 align-middle text-right">
-                                    <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('inventory_requests.show', $req) }}" class="inline-flex items-center px-3 py-1.5 rounded-lg text-[9px] font-bold text-gray-500 hover:text-[#E11D48] hover:bg-[#E11D48]/5 border border-transparent hover:border-[#E11D48]/10 uppercase tracking-widest transition-all">
-                                            Chi tiết
-                                        </a>
+                                <td class="pr-8 py-6 text-right whitespace-nowrap">
+                                    <div class="flex justify-end items-center space-x-6">
+                                        <a href="{{ route('inventory_requests.show', $req) }}" class="text-[10px] font-bold text-gray-400 hover:text-gray-900 tracking-widest uppercase transition-all italic">Chi tiết</a>
                                         
                                         @if($req->status == 'approved')
                                             @if(!$req->receipt)
                                                 <form action="{{ route('inventory_requests.generate_receipt', $req) }}" method="POST" class="inline">
                                                     @csrf
-                                                    <button type="submit" class="bg-gray-900 text-white text-[9px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest hover:bg-[#E11D48] transition-all shadow-sm">
-                                                        TẠO LỆNH
-                                                    </button>
+                                                    <button type="submit" class="text-[10px] font-bold text-[#E11D48] hover:text-red-700 tracking-widest uppercase transition-all italic underline underline-offset-4 decoration-2">Tạo lệnh</button>
                                                 </form>
                                             @else
-                                                <a href="{{ route('inventory_receipts.show', $req->receipt) }}" class="inline-flex items-center px-3 py-1.5 bg-green-50 text-[9px] text-green-700 rounded-lg border border-green-200 hover:bg-green-600 hover:text-white transition-all font-bold uppercase tracking-widest shadow-sm">
-                                                    THỰC THI
-                                                </a>
+                                                <a href="{{ route('inventory_receipts.show', $req->receipt) }}" class="text-[10px] font-bold text-green-600 hover:text-green-700 tracking-widest uppercase transition-all italic">Thực thi</a>
                                             @endif
                                         @endif
                                     </div>
@@ -122,13 +149,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-24 text-center">
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-20 h-20 bg-gray-50 rounded-2xl mb-4 flex items-center justify-center border-2 border-dashed border-gray-200">
-                                            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
-                                        </div>
-                                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest">Hệ thống chưa ghi nhận yêu cầu nào</p>
-                                    </div>
+                                <td colspan="{{ $type == 'all' ? 7 : 6 }}" class="py-32 text-center opacity-30 italic">
+                                    <div class="text-[11px] font-bold uppercase tracking-[0.3em]">Hệ thống chưa ghi nhận hồ sơ yêu cầu</div>
                                 </td>
                             </tr>
                         @endforelse
@@ -138,7 +160,7 @@
         </div>
 
         @if($requests->hasPages())
-            <div class="mt-8 card-premium p-4">
+            <div class="mt-8 flex justify-center">
                 {{ $requests->links() }}
             </div>
         @endif

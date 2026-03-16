@@ -16,9 +16,16 @@ class InventoryRequestController extends Controller
     {
         $type = $request->get('type', 'inbound');
         $status = $request->get('status', 'all');
-        $query = InventoryRequest::with(['requester', 'shipment', 'receipt'])->where('type', $type)->latest();
         
+        $query = InventoryRequest::with(['requester', 'shipment', 'receipt'])->latest();
+        
+        if ($type !== 'all') {
+            $query->where('type', $type);
+        }
+
+        if ($status !== 'all') {
             $query->where('status', $status);
+        }
 
         $requests = $query->paginate(20)->withQueryString();
         return view('inventory_requests.index', compact('requests', 'status', 'type'));

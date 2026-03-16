@@ -1,72 +1,95 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-end pb-2">
             <div>
-                <h2 class="font-bold text-3xl text-gray-800 leading-tight">
-                    Thêm mới <span class="text-enterprise-red">Đối tác</span>
+                <h2 class="font-bold text-xl text-gray-900 tracking-tight uppercase leading-none">
+                    Thêm mới <span class="text-[#E11D48]">Đối tác</span>
                 </h2>
-                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Đăng ký nhà cung cấp mới vào hệ thống</p>
+                <div class="flex items-center gap-2 mt-1.5">
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#E11D48]"></div>
+                    <span class="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400">Đăng ký thực thể nhà cung cấp mới vào hệ thống</span>
+                </div>
             </div>
-            <a href="{{ route('partners.index') }}" class="text-gray-500 hover:text-gray-800 text-sm font-medium">
-                ← Quay lại danh sách
+            <a href="{{ route('partners.index') }}" class="text-[10px] font-bold text-gray-400 hover:text-gray-900 uppercase tracking-widest transition-colors mb-2">
+                Quay lại danh sách
             </a>
         </div>
     </x-slot>
 
-    <div class="max-w-4xl mx-auto">
-        <form action="{{ route('partners.store') }}" method="POST" class="space-y-6 pb-20">
+    <div class="max-w-4xl mx-auto py-8 px-4 animate-in fade-in slide-in-from-bottom-6 duration-700">
+        <form action="{{ route('partners.store') }}" method="POST" class="space-y-10 pb-20">
             @csrf
             
-            <div class="card-premium">
-                <h3 class="font-bold text-lg mb-6 border-b pb-4 text-gray-800">Thông tin cơ bản</h3>
-                
-                <div class="space-y-6">
-                    <div>
-                        <label class="enterprise-label">Tên đối tác / Nhà cung cấp <span class="text-red-600">*</span></label>
+            <!-- Thông tin cơ bản -->
+            <div class="card-enterprise overflow-hidden border-t-0 p-0 shadow-2xl">
+                <div class="p-10 bg-white space-y-8">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-1.5 h-6 bg-[#E11D48] rounded-full"></div>
+                            <h3 class="font-bold text-sm uppercase tracking-[0.1em] text-gray-800">Thông tin cơ sở định danh</h3>
+                        </div>
+                        <div class="text-[9px] font-bold text-gray-300 uppercase tracking-widest italic">New Entry Request</div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">Tên đối tác / Nhà cung cấp <span class="text-[#E11D48]">*</span></label>
                         <input type="text" name="name" required value="{{ old('name') }}" 
-                               class="enterprise-input font-bold" placeholder="Nhập tên đầy đủ của công ty hoặc cá nhân...">
-                        @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                               class="enterprise-input py-3 text-[14px] font-bold italic" placeholder="Nhập tên pháp nhân đầy đủ của công ty hoặc cá nhân...">
+                        @error('name')<p class="text-red-500 text-[10px] font-bold uppercase mt-2 tracking-tight">{{ $message }}</p>@enderror
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="enterprise-label">Mã số thuế</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">Mã số thuế</label>
                             <input type="text" name="tax_code" value="{{ old('tax_code') }}" 
-                                   class="enterprise-input" placeholder="MST hoặc số Đăng ký kinh doanh...">
+                                   class="enterprise-input py-3 text-[13px] font-bold" placeholder="MST hoặc số Đăng ký kinh doanh...">
                         </div>
-                        <div>
-                            <label class="enterprise-label">Người liên hệ trực tiếp</label>
+                        <div class="space-y-3">
+                            <label class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">Người liên hệ trực tiếp</label>
                             <input type="text" name="contact_person" value="{{ old('contact_person') }}" 
-                                   class="enterprise-input" placeholder="Họ tên người đại diện/liên hệ...">
+                                   class="enterprise-input py-3 text-[13px] font-bold" placeholder="Họ tên người đại diện kết nối...">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card-premium">
-                <h3 class="font-bold text-lg mb-6 border-b pb-4 text-gray-800">Thông tin liên lạc</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="enterprise-label">Số điện thoại</label>
-                        <input type="text" name="phone" value="{{ old('phone') }}" 
-                               class="enterprise-input" placeholder="Số điện thoại di động hoặc cố định...">
+            <!-- Thông tin liên lạc -->
+            <div class="card-enterprise overflow-hidden border-t-0 p-0 shadow-2xl">
+                <div class="p-10 bg-white space-y-8">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-1.5 h-6 bg-gray-900 rounded-full"></div>
+                            <h3 class="font-bold text-sm uppercase tracking-[0.1em] text-gray-800">Phương thức giao tiếp & Trụ sở</h3>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7 8.914L13 15l7 7M3 13h1m10 0h1m-7 8a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
                     </div>
-                    <div>
-                        <label class="enterprise-label">Địa chỉ Email</label>
-                        <input type="email" name="email" value="{{ old('email') }}" 
-                               class="enterprise-input" placeholder="Email liên hệ chính thức...">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="enterprise-label">Địa chỉ trụ sở</label>
-                        <textarea name="address" rows="3" class="enterprise-input" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố...">{{ old('address') }}</textarea>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">Số điện thoại hotline</label>
+                            <input type="text" name="phone" value="{{ old('phone') }}" 
+                                   class="enterprise-input py-3 text-[13px] font-bold" placeholder="Di động hoặc số cố định...">
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">Địa chỉ Email</label>
+                            <input type="email" name="email" value="{{ old('email') }}" 
+                                   class="enterprise-input py-3 text-[13px] font-bold" placeholder="Thư điện tử giao dịch...">
+                        </div>
+                        <div class="md:col-span-2 space-y-3">
+                            <label class="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">Địa chỉ trụ sở pháp lý</label>
+                            <textarea name="address" rows="3" class="enterprise-input py-3 text-[13px] font-bold" placeholder="Ghi rõ số nhà, tên đường, phường/xã, quận/huyện...">{{ old('address') }}</textarea>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-4 pt-4">
-                <a href="{{ route('partners.index') }}" class="px-6 py-2 text-sm font-bold text-gray-600 hover:text-gray-900 flex items-center">Hủy bỏ</a>
-                <button type="submit" class="btn-enterprise !px-12 !py-3">LƯU THÔNG TIN</button>
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-end space-x-8 pt-10 border-t border-gray-100">
+                <a href="{{ route('partners.index') }}" class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">HỦY BỎ CHIẾN DỊCH</a>
+                <button type="submit" class="btn-enterprise-danger !px-10 h-10 shadow-xl transform active:scale-95 transition-all text-[11px]">
+                    <svg class="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                    KHỞI TẠO ĐỐI TÁC
+                </button>
             </div>
         </form>
     </div>

@@ -15,37 +15,46 @@
     }
 
     .card-enterprise {
-        @apply bg-white border-l-2 border-l-[#E11D48] border-y border-r border-gray-200 shadow-sm rounded-lg overflow-hidden transition-all duration-300;
+        @apply bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden transition-all duration-300;
     }
 
     /* Enterprise Buttons */
     .btn-enterprise {
-        @apply inline-flex items-center justify-center px-4 py-1.5 bg-[#E11D48] border border-transparent rounded-lg font-bold text-[10px] text-white uppercase tracking-[0.1em] hover:bg-[#BE123C] active:bg-[#9F1239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E11D48] transition-all duration-200 shadow-sm disabled:opacity-50;
+        @apply bg-gray-900 shadow-sm text-white px-5 py-2.5 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:bg-black hover:shadow-md flex items-center justify-center gap-2;
+    }
+
+    .btn-enterprise-danger {
+        @apply bg-[#E11D48] shadow-sm text-white px-5 py-2.5 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:bg-[#BE123C] hover:shadow-md flex items-center justify-center gap-2;
     }
 
     .btn-enterprise-outline {
-        @apply inline-flex items-center justify-center px-4 py-1.5 bg-white border border-[#E11D48] rounded-lg font-bold text-[10px] text-[#E11D48] uppercase tracking-[0.1em] hover:bg-[#FFF1F2] transition-all duration-200;
+        @apply bg-white border border-[#E11D48] text-[#E11D48] px-4 h-9 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all hover:bg-[#E11D48] hover:text-white flex items-center justify-center gap-2 shadow-sm;
     }
 
     /* Enterprise Inputs */
     .enterprise-input {
-        @apply block w-full rounded-lg border-gray-300 shadow-sm text-xs focus:border-[#E11D48] focus:ring focus:ring-[#E11D48] focus:ring-opacity-20 transition-all duration-200 py-1.5;
+        @apply block w-full rounded-lg border-gray-300 shadow-sm text-[13px] focus:border-[#E11D48] focus:ring focus:ring-[#E11D48] focus:ring-opacity-20 transition-all duration-200 py-1.5;
     }
 
     /* Table Styles */
     .table-premium {
-        @apply min-w-full divide-y divide-gray-200 border-separate border-spacing-0;
+        @apply min-w-full table-fixed divide-y divide-gray-200 border-separate border-spacing-0;
     }
     .table-premium th {
-        @apply px-4 py-2.5 bg-gray-50 text-left text-[9px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-200;
+        @apply px-6 py-4 bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase border-b border-gray-100;
     }
+    
     .table-premium td {
-        @apply px-4 py-2.5 bg-white text-[11px] text-gray-600 border-b border-gray-50;
+        @apply px-6 py-4 bg-white text-[12px] text-gray-600 border-b border-gray-50 transition-colors align-middle;
+    }
+
+    .td-actions {
+        @apply flex items-center justify-center gap-4 whitespace-nowrap;
     }
 
     /* Badges */
     .badge-enterprise {
-        @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold leading-4 border;
+        @apply inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold leading-none border uppercase tracking-wider shadow-sm;
     }
 }
 
@@ -60,6 +69,9 @@
 /* Sidebar Specifics */
 .sidebar-dark {
     @apply bg-[#0f172a] text-gray-400;
+}
+.sidebar-light {
+    @apply bg-white text-gray-500 border-r border-gray-200;
 }
 .sidebar-link-active {
     @apply bg-[#E11D48] text-white shadow-lg shadow-[#E11D48]/30;

@@ -78,9 +78,9 @@
                     }">
                         <div class="flex items-center justify-between border-b pb-2">
                             <h3 class="font-bold text-gray-700 uppercase text-xs tracking-wider">Danh mục hàng hóa giao nhận</h3>
-                            <button type="button" @click="addItem()" class="text-[10px] font-bold text-red-600 hover:text-red-700 uppercase tracking-widest flex items-center">
-                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                Thêm hàng ngoài
+                            <button type="button" @click="addItem()" class="text-[10px] font-bold text-[#E11D48] hover:text-[#BE123C] uppercase tracking-widest flex items-center transition-colors">
+                                <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                                THÊM HÀNG NGOÀI
                             </button>
                         </div>
                         
@@ -113,7 +113,7 @@
                                             <div>
                                                 <label class="text-[10px] font-bold text-red-400 uppercase block mb-1">S.L Giao</label>
                                                 <input type="number" :name="'items['+index+'][delivered_qty]'" x-model="item.delivered_qty" required min="1"
-                                                       class="w-full border-red-200 rounded text-sm font-black text-red-600 focus:ring-red-500 focus:border-red-500 text-center">
+                                                       class="w-full border-red-200 rounded text-sm font-bold text-red-600 focus:ring-red-500 focus:border-red-500 text-center">
                                             </div>
                                         </div>
                                     </div>
@@ -123,17 +123,19 @@
                             <div x-show="items.length === 0" class="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
                                 <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
                                 <p class="text-xs text-gray-400 italic">Chưa có hàng hóa nào được thêm vào lô hàng.</p>
-                                <button type="button" @click="addItem()" class="mt-4 px-4 py-2 bg-red-600 text-white rounded-md text-xs font-bold uppercase tracking-widest hover:bg-red-700 shadow-lg shadow-red-200">
-                                    Thêm hàng ngay
+                                <button type="button" @click="addItem()" class="mt-4 px-6 py-2.5 !bg-[#E11D48] !text-white rounded-lg text-[10px] font-bold uppercase tracking-widest hover:!bg-[#BE123C] shadow-lg shadow-red-900/10 transition-all transform hover:-translate-y-0.5">
+                                    THÊM HÀNG NGAY
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end space-x-6 pt-10 border-t mt-12">
-                    <a href="{{ route('shipments.index') }}" class="text-sm font-bold text-gray-400 hover:text-gray-600 uppercase tracking-widest">Hủy bỏ</a>
-                    <button type="submit" class="btn-enterprise py-4 px-12 text-base shadow-lg shadow-red-200" {{ !$selectedContract ? 'disabled' : '' }}>
+                <div class="flex items-center justify-end space-x-4 pt-10 border-t mt-12">
+                    <a href="{{ route('shipments.index') }}" class="px-8 py-3 rounded-lg font-bold text-[11px] uppercase tracking-wider border border-gray-200 text-gray-400 hover:bg-gray-50 transition-all flex items-center h-[46px]">
+                        HỦY BỎ
+                    </a>
+                    <button type="submit" class="!bg-[#E11D48] !text-white px-10 py-3 rounded-lg font-bold text-[11px] uppercase tracking-wider h-[46px] flex items-center shadow-lg shadow-red-900/10 transform transition-transform hover:-translate-y-0.5" {{ !$selectedContract ? 'disabled' : '' }}>
                         LƯU LÔ HÀNG
                     </button>
                 </div>

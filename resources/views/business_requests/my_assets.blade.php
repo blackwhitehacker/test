@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-bold text-2xl text-gray-800 uppercase tracking-tight">Tài sản của tôi</h2>
+            <h2 class="font-bold text-2xl text-gray-800 uppercase tracking-tighter">Tài sản của tôi</h2>
             <div class="flex gap-4">
                 <a href="{{ route('business_requests.create', ['type' => 'repair']) }}" class="enterprise-btn-secondary">
                     Yêu cầu sửa chữa
@@ -18,11 +18,11 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-100">
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Mã tài sản</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Tên tài sản</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Nhóm</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Trạng thái</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Ngày nhận</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Mã tài sản</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Tên tài sản</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Nhóm</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Trạng thái</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Ngày nhận</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
@@ -50,7 +50,7 @@
                                         'lost' => 'Đã mất/hỏng',
                                     ];
                                 @endphp
-                                <span class="text-[10px] font-black uppercase px-2 py-1 rounded-md border {{ $statusClasses[$asset->status] ?? 'bg-gray-50 text-gray-500 border-gray-100' }}">
+                                <span class="text-[10px] font-bold uppercase px-2 py-1 rounded-md border {{ $statusClasses[$asset->status] ?? 'bg-gray-50 text-gray-500 border-gray-100' }}">
                                     {{ $statusLabels[$asset->status] ?? $asset->status }}
                                 </span>
                             </td>

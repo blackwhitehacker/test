@@ -92,6 +92,8 @@ class AssetController extends Controller
             'warranty_expiry' => 'nullable|date',
             'status' => 'required|string|in:inventory,in_use,repairing,liquidating',
             'location' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+            'attachments' => 'nullable|array',
         ]);
 
         // Find or Create Partner
@@ -129,7 +131,7 @@ class AssetController extends Controller
 
     public function show(Asset $asset)
     {
-        $asset->load(['group.parent.parent', 'partner', 'user', 'activityLogs.user']);
+        $asset->load(['group.parent.parent', 'partner', 'user', 'activityLogs.user', 'movementHistory']);
         return view('assets.show', compact('asset'));
     }
 
@@ -178,6 +180,8 @@ class AssetController extends Controller
             'warranty_expiry' => 'nullable|date',
             'status' => 'required|string|in:inventory,in_use,repairing,liquidating',
             'location' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+            'attachments' => 'nullable|array',
         ]);
 
         // Find or Create Partner

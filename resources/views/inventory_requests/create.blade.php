@@ -5,7 +5,7 @@
                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             </a>
             <div>
-                <h2 class="font-bold text-xl text-gray-900 uppercase tracking-tight">
+                <h2 class="font-bold text-xl text-gray-900 uppercase tracking-tighter">
                     Tạo phiếu yêu cầu {{ $type == 'inbound' ? 'nhập kho' : 'xuất kho' }} mới
                 </h2>
                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Hệ thống quản lý kho & Phê duyệt</p>
@@ -36,14 +36,14 @@
             <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-8 py-6 border-b border-gray-50 flex items-center space-x-3 bg-gray-50/30">
                     <div class="w-2 h-6 bg-enterprise-red rounded-full"></div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-gray-800">Thông tin phiếu yêu cầu</h3>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-gray-800">Thông tin phiếu yêu cầu</h3>
                 </div>
                 
                 <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <input type="hidden" name="type" value="{{ $type }}">
 
                     <div>
-                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
                             {{ $type == 'inbound' ? 'Nguồn nhập hàng' : 'Mục đích xuất kho' }} <span class="text-red-600">*</span>
                         </label>
                         <select name="source_type" required class="input-premium py-2 text-sm">
@@ -61,7 +61,7 @@
 
                     @if($type == 'inbound')
                     <div>
-                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Liên kết Lô hàng (nếu có)</label>
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Liên kết Lô hàng (nếu có)</label>
                         <select name="shipment_id" x-model="shipment_id" class="input-premium py-2 text-sm">
                             <option value="">-- Không liên kết --</option>
                             @foreach($shipments as $shipment)
@@ -74,13 +74,13 @@
                     </div>
                     @else
                     <div>
-                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Người nhận / Đơn vị nhận</label>
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Người nhận / Đơn vị nhận</label>
                         <input type="text" name="receiver" class="input-premium py-2 text-sm" placeholder="Nhập tên người hoặc phòng ban nhận...">
                     </div>
                     @endif
 
                     <div class="md:col-span-2 lg:col-span-3">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Ghi chú / Lý do</label>
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Ghi chú / Lý do</label>
                         <textarea name="notes" rows="2"
                                   class="block w-full border-gray-200 focus:border-enterprise-red focus:ring-enterprise-red rounded-2xl shadow-sm text-sm"
                                   placeholder="Mô tả chi tiết mục đích...">{{ old('notes') }}</textarea>
@@ -93,9 +93,9 @@
                 <div class="px-8 py-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
                     <div class="flex items-center space-x-3">
                         <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-gray-800">Danh sách hàng hóa bổ sung</h3>
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-gray-800">Danh sách hàng hóa bổ sung</h3>
                     </div>
-                    <button type="button" @click="addItem()" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">
+                    <button type="button" @click="addItem()" class="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         Thêm thủ công
                     </button>
@@ -105,7 +105,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
-                                <tr class="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-50">
+                                <tr class="text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-50">
                                     @if($type == 'outbound')
                                     <th class="pb-4 w-1/4">Chọn tài sản</th>
                                     @endif
@@ -143,7 +143,7 @@
                                         </td>
                                         <td class="py-4 pr-4">
                                             <input type="number" :name="`items[${index}][quantity]`" x-model="item.quantity" required min="1"
-                                                   class="block w-full border-transparent focus:border-enterprise-red focus:ring-enterprise-red rounded-xl text-sm bg-gray-50 group-hover:bg-white transition-all text-center font-black">
+                                                   class="block w-full border-transparent focus:border-enterprise-red focus:ring-enterprise-red rounded-xl text-sm bg-gray-50 group-hover:bg-white transition-all text-center font-bold">
                                         </td>
                                         <td class="py-4 pr-4">
                                             <div class="relative">
@@ -170,14 +170,14 @@
             </div>
 
             <div class="flex items-center justify-between bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest italic">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">
                     <span class="text-red-500">*</span> Vui lòng kiểm tra kỹ thông tin trước khi gửi yêu cầu.
                 </p>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('inventory_requests.index') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors">
+                    <a href="{{ route('inventory_requests.index') }}" class="px-5 py-2.5 text-[11px] font-bold uppercase tracking-widest text-gray-400 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
                         Hủy bỏ
                     </a>
-                    <button type="submit" class="bg-gray-900 hover:bg-black text-white px-10 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-gray-900/10 transition-all transform hover:-translate-y-0.5">
+                    <button type="submit" class="!bg-[#E11D48] !text-white px-6 py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider shadow-lg shadow-red-900/20 transform transition-transform hover:-translate-y-1">
                         Gửi phê duyệt yêu cầu
                     </button>
                 </div>

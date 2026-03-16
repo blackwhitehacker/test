@@ -205,9 +205,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end space-x-4 pt-8 border-t mt-8">
-                    <a href="{{ route('contracts.index') }}" class="text-sm font-bold text-gray-500 hover:text-gray-700">HỦY BỎ</a>
-                    <button type="submit" class="btn-enterprise py-3 px-12">
+                <div class="flex items-center justify-end space-x-6 pt-8 border-t mt-8">
+                    <a href="{{ route('contracts.index') }}" class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] hover:text-gray-600 transition-colors">HỦY BỎ</a>
+                    <button type="submit" class="!bg-[#E11D48] !text-white px-10 py-3.5 rounded-xl font-bold text-[11px] uppercase tracking-[0.2em] shadow-lg shadow-red-900/20 transform transition-transform hover:-translate-y-0.5 active:scale-95">
                         LƯU HỢP ĐỒNG
                     </button>
                 </div>

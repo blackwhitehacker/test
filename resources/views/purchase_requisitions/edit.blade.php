@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h2 class="font-bold text-2xl text-gray-800">
                 Chỉnh sửa tờ trình: {{ isset($requisition) ? $requisition->code : '' }}
             </h2>
@@ -10,7 +10,7 @@
         </div>
     </x-slot>
 
-    <div class="max-w-5xl mx-auto" x-data="{ 
+    <div class="max-w-6xl mx-auto" x-data="{ 
         items: {{ json_encode($requisition->items ?? []) }},
         totalEstimate: {{ $requisition->estimated_cost ?? 0 }},
         addAsset() { this.items.push({ name: '', unit: 'Cái', quantity: 1, estimate: 0 }) },
@@ -26,7 +26,7 @@
             @method('PUT')
             
             <!-- General Information -->
-            <div class="card-premium">
+            <div class="card-premium p-8">
                 <h3 class="font-bold text-lg mb-6 border-b pb-4 text-gray-800">Thông tin chung</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="md:col-span-2">
@@ -64,7 +64,7 @@
                                     <button type="button" @click="selectPartner(p)" class="w-full text-left px-4 py-2 hover:bg-gray-50 flex justify-between items-center transition-colors">
                                         <div>
                                             <div class="font-bold text-xs text-gray-800" x-text="p.name"></div>
-                                            <div class="text-[9px] text-gray-400 uppercase font-black" x-text="p.code"></div>
+                                            <div class="text-[9px] text-gray-400 uppercase font-bold" x-text="p.code"></div>
                                         </div>
                                     </button>
                                 </template>
@@ -79,7 +79,7 @@
             </div>
 
             <!-- Items List -->
-            <div class="card-premium">
+            <div class="card-premium p-8">
                 <div class="flex justify-between items-center mb-6 border-b pb-4">
                     <h3 class="font-bold text-lg text-gray-800">Danh mục tài sản chi tiết</h3>
                     <button type="button" @click="addAsset()" class="bg-gray-800 text-white px-4 py-2 rounded text-sm font-bold hover:bg-gray-700 transition">
@@ -135,7 +135,7 @@
             </div>
 
             <!-- Documents -->
-            <div class="card-premium">
+            <div class="card-premium p-8">
                 <h3 class="font-bold text-lg mb-6 border-b pb-4 text-gray-800">Tài liệu hồ sơ đã có</h3>
                 <div class="flex flex-wrap gap-4 mb-8">
                     @foreach($requisition->attachments ?? [] as $file)

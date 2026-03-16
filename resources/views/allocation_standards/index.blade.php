@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-bold text-2xl text-gray-800 uppercase tracking-tight">Định mức cấp phát tài sản</h2>
+            <h2 class="font-bold text-2xl text-gray-800 uppercase tracking-tighter">Định mức cấp phát tài sản</h2>
             <a href="{{ route('allocation_standards.create') }}" class="enterprise-btn-primary">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 Thêm định mức mới
@@ -14,7 +14,7 @@
         <div class="card-premium p-6">
             <form action="{{ route('allocation_standards.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-gray-400 mb-1 tracking-wider">Đối tượng</label>
+                    <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1 tracking-wider">Đối tượng</label>
                     <select name="target_type" class="enterprise-input">
                         <option value="">Tất cả đối tượng</option>
                         <option value="individual">Cá nhân</option>
@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-gray-400 mb-1 tracking-wider">Nhóm tài sản</label>
+                    <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1 tracking-wider">Nhóm tài sản</label>
                     <select name="group_id" class="enterprise-input">
                         <option value="">Tất cả nhóm</option>
                         @foreach(\App\Models\AssetGroup::all() as $group)
@@ -32,7 +32,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-gray-400 mb-1 tracking-wider">Tìm kiếm</label>
+                    <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1 tracking-wider">Tìm kiếm</label>
                     <input type="text" name="search" placeholder="Tên đối tượng..." class="enterprise-input">
                 </div>
                 <div class="flex gap-2">
@@ -46,19 +46,19 @@
 
         <!-- standards Table -->
         <div class="card-premium overflow-hidden">
-            <div class="bg-gray-900 px-6 py-4 flex justify-between items-center">
-                <h3 class="text-white text-xs font-bold uppercase tracking-widest">Danh sách định mức cấu hình</h3>
+            <div class="bg-white px-6 py-4 flex justify-between items-center border-b border-gray-100">
+                <h3 class="text-gray-900 text-xs font-bold uppercase tracking-widest">Danh sách định mức cấu hình</h3>
                 <span class="text-gray-400 text-[10px] font-bold">{{ $standards->total() }} bản ghi</span>
             </div>
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-100">
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Đối tượng</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Tên đối tượng/Phòng ban</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Nhóm tài sản</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider text-center">Định mức</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider">Ghi chú</th>
-                        <th class="px-6 py-4 text-[10px] font-black uppercase text-gray-400 tracking-wider text-right">Thao tác</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Đối tượng</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Tên đối tượng/Phòng ban</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Nhóm tài sản</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider text-center">Định mức</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider">Ghi chú</th>
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase text-gray-400 tracking-wider text-right">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
@@ -77,7 +77,7 @@
                                         'center' => 'Trung tâm',
                                     ];
                                 @endphp
-                                <span class="text-[10px] font-black uppercase px-2 py-1 rounded-md border {{ $typeClasses[$standard->target_type] ?? 'bg-gray-50 text-gray-500 border-gray-100' }}">
+                                <span class="text-[10px] font-bold uppercase px-2 py-1 rounded-md border {{ $typeClasses[$standard->target_type] ?? 'bg-gray-50 text-gray-500 border-gray-100' }}">
                                     {{ $typeLabels[$standard->target_type] ?? $standard->target_type }}
                                 </span>
                             </td>
@@ -88,7 +88,7 @@
                                 <span class="text-[11px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">{{ $standard->assetGroup->name ?? 'N/A' }}</span>
                             </td>
                             <td class="px-6 py-4 align-middle text-center">
-                                <span class="text-xs font-black text-[#E11D48]">{{ $standard->limit_quantity }}</span>
+                                <span class="text-xs font-bold text-[#E11D48]">{{ $standard->limit_quantity }}</span>
                                 <span class="text-[10px] text-gray-400 font-bold ml-1">tài sản</span>
                             </td>
                             <td class="px-6 py-4 align-middle">

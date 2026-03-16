@@ -37,6 +37,8 @@ class Asset extends Model
         'assigned_center',
         'location',
         'quantity',
+        'notes',
+        'attachments',
     ];
 
     public static $codePrefix = 'TS';
@@ -76,6 +78,13 @@ class Asset extends Model
             ->where(function($q) {
                 $q->where('model_type', get_class($this));
             })
+            ->latest();
+    }
+
+    public function movementHistory(): HasMany
+    {
+        return $this->hasMany(InventoryRequestItem::class, 'asset_id')
+            ->with(['request.requester', 'request.handoverRecord.receiver'])
             ->latest();
     }
 

@@ -25,7 +25,11 @@ class PurchaseRequisitionController extends Controller
         }
 
         $requisitions = $query->paginate(20)->withQueryString();
-        return view('purchase_requisitions.index', compact('requisitions'));
+        
+        $pendingCount = PurchaseRequisition::where('status', 'pending')->count();
+        $approvedCount = PurchaseRequisition::where('status', 'approved')->count();
+
+        return view('purchase_requisitions.index', compact('requisitions', 'pendingCount', 'approvedCount'));
     }
 
     public function create()
@@ -167,9 +171,6 @@ class PurchaseRequisitionController extends Controller
      */
     public function destroy(PurchaseRequisition $purchaseRequisition)
     {
-        if ($purchaseRequisition->status !== 'pending') {
-            return redirect()->back()->with('error', 'Không thể xóa tờ trình đã xử lý.');
-        }
         $purchaseRequisition->delete();
         return redirect()->route('purchase_requisitions.index')->with('success', 'Đã xóa tờ trình.');
     }

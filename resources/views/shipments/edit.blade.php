@@ -114,7 +114,7 @@
                                             <div>
                                                 <label class="text-[10px] font-bold text-red-400 uppercase block mb-1">S.L Giao</label>
                                                 <input type="number" :name="'items['+index+'][delivered_qty]'" x-model="item.delivered_qty" required min="0"
-                                                       class="w-full border-red-200 rounded text-sm font-black text-red-600 focus:ring-red-500 focus:border-red-500 text-center">
+                                                       class="w-full border-red-200 rounded text-sm font-bold text-red-600 focus:ring-red-500 focus:border-red-500 text-center">
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +134,7 @@
 
                 <div class="flex items-center justify-end space-x-6 pt-10 border-t mt-12">
                     <a href="{{ route('shipments.show', $shipment) }}" class="text-sm font-bold text-gray-400 hover:text-gray-600 uppercase tracking-widest">Hủy bỏ</a>
-                    <button type="submit" class="btn-enterprise py-4 px-12 text-base shadow-lg shadow-red-200">
+                    <button type="submit" class="btn-enterprise-danger py-4 px-12 text-base shadow-lg shadow-red-200">
                         CẬP NHẬT LÔ HÀNG
                     </button>
                 </div>

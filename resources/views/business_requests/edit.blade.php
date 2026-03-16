@@ -20,7 +20,7 @@
             @method('PUT')
             
             <div class="card-premium">
-                <h3 class="font-bold text-lg mb-6 border-b pb-4 text-gray-800 tracking-tight">Thông tin yêu cầu</h3>
+                <h3 class="font-bold text-lg mb-6 border-b pb-4 text-gray-800 tracking-tighter">Thông tin yêu cầu</h3>
                 <div class="space-y-6">
                     <div class="grid grid-cols-2 gap-6">
                         <div>
@@ -46,7 +46,7 @@
 
             <div class="card-premium">
                 <div class="flex justify-between items-center mb-6 border-b pb-4 text-gray-800">
-                    <h3 class="font-bold text-lg tracking-tight">Danh sách tài sản</h3>
+                    <h3 class="font-bold text-lg tracking-tighter">Danh sách tài sản</h3>
                     <button type="button" @click="addItem()" class="text-enterprise-red text-sm font-bold hover:underline">+ Thêm dòng</button>
                 </div>
 
@@ -54,7 +54,7 @@
                     <template x-for="(item, index) in items" :key="index">
                         <div class="flex gap-4 items-end bg-gray-50/50 p-4 rounded-xl border border-gray-100 group transition-all hover:bg-white hover:shadow-md">
                             <div class="flex-1">
-                                <label class="text-[10px] font-black uppercase text-gray-400 mb-1 block">Chọn tài sản</label>
+                                <label class="text-[10px] font-bold uppercase text-gray-400 mb-1 block">Chọn tài sản</label>
                                 <select :name="'items['+index+'][asset_id]'" x-model="item.asset_id" required class="enterprise-input">
                                     <option value="">-- Chọn tài sản --</option>
                                     @foreach($assets as $asset)
@@ -66,7 +66,7 @@
                                 </select>
                             </div>
                             <div class="w-24">
-                                <label class="text-[10px] font-black uppercase text-gray-400 mb-1 block">Số lượng</label>
+                                <label class="text-[10px] font-bold uppercase text-gray-400 mb-1 block">Số lượng</label>
                                 <input type="number" :name="'items['+index+'][quantity]'" x-model="item.quantity" min="1" required class="enterprise-input text-center">
                             </div>
                             <button type="button" @click="removeItem(index)" x-show="items.length > 1" class="p-2.5 text-gray-300 hover:text-red-500 rounded-lg transition-colors">

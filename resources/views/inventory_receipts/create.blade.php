@@ -37,7 +37,7 @@
 
             <div class="flex items-center justify-end space-x-3 pt-4 border-t mt-4">
                 <a href="{{ route('inventory_receipts.index') }}" class="text-sm text-gray-600 hover:text-gray-900">Hủy bỏ</a>
-                <button type="submit" class="btn-enterprise uppercase tracking-widest text-xs font-bold px-8">
+                <button type="submit" class="btn-enterprise-danger uppercase tracking-widest text-xs font-bold px-8">
                     Hoàn tất lập phiếu
                 </button>
             </div>

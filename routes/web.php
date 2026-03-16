@@ -14,6 +14,9 @@ use App\Http\Controllers\InfoLookupController;
 use App\Http\Controllers\BusinessRequestController;
 use App\Http\Controllers\AllocationStandardController;
 use App\Http\Controllers\HandoverRecordController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ActivityLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -83,6 +86,25 @@ Route::middleware('auth')->group(function () {
 
     // Định mức cấp phát
     Route::resource('allocation_standards', AllocationStandardController::class);
+
+    // Hệ thống
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('users', UserController::class);
+        Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity_logs.index');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/assets', [ReportController::class, 'assets'])->name('reports.assets');
+        Route::get('/scale', [ReportController::class, 'scale'])->name('reports.scale');
+        Route::get('/inventory', [ReportController::class, 'inventory'])->name('reports.inventory');
+        Route::get('/procurement', [ReportController::class, 'procurement'])->name('reports.procurement');
+        Route::get('/liquidation', [ReportController::class, 'liquidation'])->name('reports.liquidation');
+        Route::get('/export-assets', [ReportController::class, 'exportAssets'])->name('reports.export_assets');
+        Route::get('/export-scale', [ReportController::class, 'exportScale'])->name('reports.export_scale');
+        Route::get('/export-inventory', [ReportController::class, 'exportInventory'])->name('reports.export_inventory');
+        Route::get('/export-procurement', [ReportController::class, 'exportProcurement'])->name('reports.export_procurement');
+        Route::get('/export-liquidation', [ReportController::class, 'exportLiquidation'])->name('reports.export_liquidation');
+    });
 
     // Biên bản bàn giao
     Route::post('/handover_records/{handover_record}/sign', [HandoverRecordController::class, 'sign'])->name('handover_records.sign');

@@ -10,7 +10,7 @@
                 </a>
                 <div>
                     <h2 class="font-bold text-xl text-gray-900 tracking-tight uppercase">
-                        Yêu cầu <span class="text-[#E11D48]">{{ $inventoryRequest->type == 'inbound' ? 'nhập kho' : 'xuất kho' }}</span>: {{ $inventoryRequest->code }}
+                        Yêu cầu <span class="text-gray-900">{{ $inventoryRequest->type == 'inbound' ? 'nhập kho' : 'xuất kho' }}</span>: {{ $inventoryRequest->code }}
                     </h2>
                     <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Hệ thống phê duyệt & Điều phối vật tư</p>
                 </div>
@@ -23,7 +23,7 @@
                     </a>
                     <form action="{{ route('inventory_requests.approve', $inventoryRequest) }}" method="POST" onsubmit="return confirm('Phê duyệt phiếu yêu cầu này?')">
                         @csrf
-                        <button type="submit" class="btn-enterprise">
+                        <button type="submit" class="btn-enterprise-danger px-6">
                             Duyệt hồ sơ
                         </button>
                     </form>
@@ -42,13 +42,13 @@
                     @if(!$inventoryRequest->receipt)
                         <form action="{{ route('inventory_requests.generate_receipt', $inventoryRequest) }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn-enterprise">
+                            <button type="submit" class="btn-enterprise-danger px-6 flex items-center">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                                 Khởi tạo lệnh {{ $inventoryRequest->type == 'inbound' ? 'nhập' : 'xuất' }} kho
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('inventory_receipts.show', $inventoryRequest->receipt) }}" class="btn-enterprise bg-green-600">
+                        <a href="{{ route('inventory_receipts.show', $inventoryRequest->receipt) }}" class="btn-enterprise-danger bg-green-600">
                             Thực thi lệnh nghiệp vụ
                         </a>
                     @endif
@@ -96,12 +96,12 @@
                         <div>
                             <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Người đề xuất</p>
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center text-xs font-bold text-white shadow-sm">
+                                <div class="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-xs font-bold text-gray-400 shadow-sm">
                                     {{ strtoupper(substr($inventoryRequest->requester->name, 0, 1)) }}
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-xs font-bold text-gray-900">{{ $inventoryRequest->requester->name }}</span>
-                                    <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Hệ thống</span>
+                                    <span class="text-xs font-bold text-gray-400">{{ $inventoryRequest->requester->name }}</span>
+                                    <span class="text-[9px] text-gray-300 font-bold uppercase tracking-widest">Hệ thống</span>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
 
                         <div>
                             <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Nội dung</p>
-                            <div class="p-4 bg-gray-900 text-white rounded-xl text-xs leading-relaxed border-l-2 border-[#E11D48]">
+                            <div class="p-4 bg-white text-gray-600 rounded-xl text-xs leading-relaxed border-l-4 border-[#E11D48] shadow-sm border border-gray-100">
                                 {{ $inventoryRequest->notes ?: 'Không có ghi chú.' }}
                             </div>
                         </div>
@@ -136,12 +136,12 @@
 
             <!-- Items Details -->
             <div class="card-enterprise overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-900 text-white">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-white">
                     <div class="flex items-center space-x-2">
-                        <svg class="w-4 h-4 text-[#E11D48]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                        <h3 class="text-[10px] font-bold uppercase tracking-widest">Danh mục vật tư</h3>
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Danh mục vật tư</h3>
                     </div>
-                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Trình mặt {{ $inventoryRequest->items->count() }} mục</span>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Trình mặt {{ $inventoryRequest->items->count() }} mục</span>
                 </div>
                 <div class="p-0">
                     @if($inventoryRequest->items->count() > 0)
@@ -191,7 +191,7 @@
                                     <tr>
                                         <td colspan="4" class="py-5 text-right text-[9px] font-bold text-gray-400 uppercase tracking-widest pl-6">Tổng giá trị dự kiến:</td>
                                         <td class="py-5 text-right pr-6">
-                                            <span class="text-lg font-bold text-[#E11D48] tracking-tight">{{ number_format($total) }} đ</span>
+                                            <span class="text-lg font-bold text-[#E11D48] tracking-tighter">{{ number_format($total) }} đ</span>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -202,7 +202,7 @@
                             <div class="w-16 h-16 bg-gray-50 rounded-2xl mx-auto mb-4 flex items-center justify-center border-2 border-dashed border-gray-200">
                                 <svg class="w-8 h-8 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
                             </div>
-                            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Hồ sơ rỗng</p>
+                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hồ sơ rỗng</p>
                         </div>
                     @endif
                 </div>
@@ -210,17 +210,17 @@
 
             <!-- Shipment Info (Optional Link) -->
             @if($inventoryRequest->shipment)
-                <div class="card-enterprise p-4 bg-gray-900 text-white group flex items-center justify-between">
+                <div class="card-enterprise p-4 bg-white text-gray-900 group flex items-center justify-between border-l-4 border-[#E11D48]">
                     <div class="flex items-center gap-3">
-                        <div class="p-2 bg-white/10 rounded-lg">
+                        <div class="p-2 bg-red-50 rounded-lg">
                             <svg class="w-4 h-4 text-[#E11D48]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                         </div>
                         <div>
-                            <p class="text-[9px] font-bold uppercase text-gray-500 tracking-widest">Lô hàng liên kết</p>
+                            <p class="text-[9px] font-bold uppercase text-gray-400 tracking-widest">Lô hàng liên kết</p>
                             <h4 class="text-xs font-bold leading-tight">{{ $inventoryRequest->shipment->code }}</h4>
                         </div>
                     </div>
-                    <a href="{{ route('shipments.show', $inventoryRequest->shipment) }}" class="btn-enterprise scale-90">
+                    <a href="{{ route('shipments.show', $inventoryRequest->shipment) }}" class="btn-enterprise-danger scale-90">
                         Chi tiết
                     </a>
                 </div>
@@ -245,7 +245,7 @@
                         @if($receipt)
                             <div class="mt-6 pt-6 border-t border-gray-100">
                                 <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-3">Lệnh nghiệp vụ</p>
-                                <a href="{{ route('inventory_receipts.show', $receipt) }}" class="btn-enterprise w-full text-center">
+                                <a href="{{ route('inventory_receipts.show', $receipt) }}" class="btn-enterprise-danger w-full text-center">
                                     Thực thi {{ $inventoryRequest->type == 'inbound' ? 'nhập' : 'xuất' }}
                                 </a>
                             </div>
@@ -253,14 +253,14 @@
                     @elseif($inventoryRequest->status == 'rejected')
                         <span class="badge-enterprise bg-red-50 text-red-700 border-red-200 py-2 px-6 text-[10px] font-bold">TỪ CHỐI</span>
                     @else
-                        <span class="badge-enterprise bg-gray-900 text-white border-none py-2 px-6 text-[10px] font-bold">{{ strtoupper($inventoryRequest->status) }}</span>
+                        <span class="badge-enterprise bg-gray-100 text-gray-400 border-gray-200 py-2 px-6 text-[10px] font-bold uppercase">{{ $inventoryRequest->status }}</span>
                     @endif
                 </div>
             </div>
 
             <!-- History Timeline -->
             <div class="card-enterprise overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 bg-gray-900 text-white">
+                <div class="px-6 py-4 border-b border-gray-100 bg-white">
                     <h3 class="text-[10px] font-bold uppercase tracking-widest text-[#E11D48]">Nhật ký thao tác</h3>
                 </div>
                 <div class="p-6">
@@ -269,7 +269,7 @@
                         <div class="space-y-6 relative">
                             @foreach($inventoryRequest->activityLogs as $log)
                                 <div class="flex items-start gap-4">
-                                    <div class="w-4 h-4 rounded-full bg-white border-2 border-gray-900 z-10 shrink-0 mt-0.5 shadow-sm"></div>
+                                    <div class="w-4 h-4 rounded-full bg-white border-2 border-red-200 z-10 shrink-0 mt-0.5 shadow-sm"></div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-[10px] font-bold text-gray-900 uppercase">
                                             {{ $log->user->name }}
@@ -286,7 +286,7 @@
 
                     @if($inventoryRequest->activityLogs->count() == 0)
                         <div class="py-10 text-center border-2 border-dashed border-gray-100 rounded-2xl">
-                            <p class="text-[9px] font-black text-gray-300 uppercase tracking-widest">Chưa có bản ghi hoạt động</p>
+                            <p class="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Chưa có bản ghi hoạt động</p>
                         </div>
                     @endif
                 </div>
@@ -302,12 +302,12 @@
                 <div class="p-3 bg-red-50 rounded-2xl">
                     <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 8 8 0 0118 0z"></path></svg>
                 </div>
-                <h2 class="font-black text-2xl text-gray-900 tracking-tighter uppercase italic">
+                <h2 class="font-bold text-2xl text-gray-900 tracking-tighter uppercase">
                     Từ chối phê duyệt
                 </h2>
             </div>
             
-            <p class="mb-6 text-[10px] font-black text-gray-400 uppercase tracking-widest leading-loose">
+            <p class="mb-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-loose">
                 Hành động này sẽ bác bỏ yêu cầu và thông báo cho người lập đề xuất. Vui lòng cung cấp lý do cụ thể bên dưới.
             </p>
 
@@ -319,10 +319,10 @@
             </div>
 
             <div class="flex justify-end items-center gap-6 pt-6 border-t border-gray-100">
-                <button type="button" x-on:click="$dispatch('close')" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors">
+                <button type="button" x-on:click="$dispatch('close')" class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors">
                     Quay lại
                 </button>
-                <button type="submit" class="btn-enterprise bg-red-600 hover:bg-red-700">
+                <button type="submit" class="btn-enterprise-danger bg-red-600 hover:bg-red-700">
                     Xác nhận bác bỏ hồ sơ
                 </button>
             </div>

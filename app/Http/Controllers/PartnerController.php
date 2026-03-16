@@ -25,7 +25,7 @@ class PartnerController extends Controller
             });
         }
 
-        $partners = $query->latest()->get();
+        $partners = $query->latest()->paginate(10);
         return view('partners.index', compact('partners'));
     }
 
