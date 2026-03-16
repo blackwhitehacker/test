@@ -1,0 +1,10 @@
+[phases.setup]
+nixPkgs = ["php82", "php82Packages.composer", "nodejs_20", "mysql-client"]
+
+[phases.build]
+dependsOn = ["setup"]
+cmds = ["composer install --no-dev --optimize-autoloader", "npm install", "npm run build"]
+
+[phases.deploy]
+dependsOn = ["build"]
+cmds = ["php artisan migrate --force", "php artisan serve --host=0.0.0.0 --port=$PORT"]
